@@ -85,11 +85,11 @@ export const GoogleMapsDashboard: React.FC<GoogleMapsDashboardProps> = ({
   const routeLayerGroupRef = useRef<L.LayerGroup | null>(null);
 
   // Layer Visibility States (Clean defaults for normal users, avoid clutter)
-  const [showAqiHeatmap, setShowAqiHeatmap] = useState(false);
+  const [showAqiHeatmap, setShowAqiHeatmap] = useState(true);
   const [showFireHotspots, setShowFireHotspots] = useState(false);
   const [showFloodRisk, setShowFloodRisk] = useState(false);
   const [showDangerZones, setShowDangerZones] = useState(false);
-  const [showCitizenReports, setShowCitizenReports] = useState(true);
+  const [showCitizenReports, setShowCitizenReports] = useState(false);
   const [showShelters, setShowShelters] = useState(false);
   const [showNeighborhoods, setShowNeighborhoods] = useState(true);
 
@@ -513,33 +513,46 @@ export const GoogleMapsDashboard: React.FC<GoogleMapsDashboardProps> = ({
       });
     }
 
-    // 2. CPCB AQI HEATMAP CELLS
+    // 2. CPCB AQI SENSOR GRID (Small Red, Green, Yellow Dots across the city)
     if (showAqiHeatmap) {
       BHOPAL_GRID_CELLS.forEach((cell) => {
         const aqiColor = 
-          cell.aqi <= 50 ? '#00b050' :
-          cell.aqi <= 100 ? '#84cc16' :
-          cell.aqi <= 200 ? '#eab308' :
-          cell.aqi <= 300 ? '#f97316' :
-          cell.aqi <= 400 ? '#ef4444' : '#7f1d1d';
+          cell.aqi <= 100 ? '#10b981' : // Green (Good / Satisfactory)
+          cell.aqi <= 200 ? '#f59e0b' : // Yellow (Moderate)
+          '#ef4444'; // Red (Poor / Severe)
 
-        const gridCircle = L.circle([cell.lat, cell.lng], {
-          radius: 2000,
-          color: aqiColor,
-          weight: 1,
-          fillColor: aqiColor,
-          fillOpacity: 0.35,
+        const aqiCategoryLabel =
+          cell.aqi <= 100 ? 'Good / अच्छा' :
+          cell.aqi <= 200 ? 'Moderate / मध्यम' : 'Poor / खराब';
+
+        const dotIcon = L.divIcon({
+          className: 'aqi-grid-dot',
+          html: `
+            <div style="position:relative; display:flex; align-items:center; justify-content:center; width:22px; height:22px; cursor:pointer;">
+              <span style="position:absolute; width:18px; height:18px; border-radius:9999px; background-color:${aqiColor}; opacity:0.35;" class="pin-radar"></span>
+              <div style="width:11px; height:11px; border-radius:9999px; background-color:${aqiColor}; border:2px solid #ffffff; box-shadow:0 2px 6px rgba(0,0,0,0.35); position:relative; z-index:2;"></div>
+            </div>
+          `,
+          iconSize: [22, 22],
+          iconAnchor: [11, 11],
         });
 
-        gridCircle.bindTooltip(
-          `<div style="font-family:'Plus Jakarta Sans'; font-size:11px;">
-            <b style="color:${aqiColor};">CPCB AQI: ${cell.aqi} (${cell.category})</b><br/>
-            <span>Temp: ${cell.temp}°C | Flood Index: ${cell.floodRisk}%</span>
+        const marker = L.marker([cell.lat, cell.lng], { icon: dotIcon });
+        marker.bindTooltip(
+          `<div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:11px; padding:6px; background:#ffffff; color:#0f172a; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15); border:1px solid #e2e8f0;">
+            <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:11.5px;">
+              <span style="width:8px; height:8px; border-radius:9999px; background:${aqiColor}; display:inline-block;"></span>
+              <span>Air Sensor Point</span>
+            </div>
+            <div style="margin-top:3px; font-size:11px;">
+              AQI: <b style="color:${aqiColor};">${cell.aqi}</b> • <b>${aqiCategoryLabel}</b>
+            </div>
+            <div style="font-size:10px; color:#64748b; margin-top:2px;">Temp: ${cell.temp}°C | Flood Risk: ${cell.floodRisk}%</div>
           </div>`,
           { sticky: true }
         );
 
-        layerGroup.addLayer(gridCircle);
+        layerGroup.addLayer(marker);
       });
     }
 
@@ -672,11 +685,16 @@ export const GoogleMapsDashboard: React.FC<GoogleMapsDashboardProps> = ({
           nb.aqiBaseline <= 100 ? '#10b981' :
           nb.aqiBaseline <= 200 ? '#f59e0b' : '#ef4444';
 
+        const aqiCategoryLabel =
+          nb.aqiBaseline <= 100 ? 'Good / अच्छा' :
+          nb.aqiBaseline <= 200 ? 'Moderate / मध्यम' : 'Poor / खराब';
+
         const nbIcon = L.divIcon({
-          className: 'neighborhood-pill-pin',
+          className: 'neighborhood-sensor-dot',
           html: `
-            <div style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:9999px; background:#ffffff; border:3px solid ${aqiColor}; box-shadow:0 4px 12px rgba(0,0,0,0.18); cursor:pointer; transform:translate(-50%, -50%); transition:transform 0.15s ease;">
-              <span style="color:#0f172a; font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; font-weight:900; line-height:1;">${nb.aqiBaseline}</span>
+            <div style="position:relative; display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; cursor:pointer; transform:translate(-50%, -50%);">
+              <span style="position:absolute; width:24px; height:24px; border-radius:9999px; background-color:${aqiColor}; opacity:0.4;" class="pin-radar"></span>
+              <div style="width:15px; height:15px; border-radius:9999px; background-color:${aqiColor}; border:2.5px solid #ffffff; box-shadow:0 3px 10px rgba(0,0,0,0.35); position:relative; z-index:2;"></div>
             </div>
           `,
           iconSize: [0, 0],
@@ -689,11 +707,17 @@ export const GoogleMapsDashboard: React.FC<GoogleMapsDashboardProps> = ({
           map.flyTo([nb.lat, nb.lng], 15, { duration: 1.2 });
         });
         marker.bindTooltip(
-          `<div style="font-family:'Plus Jakarta Sans'; font-size:11px; padding:4px;">
-            <b style="color:${aqiColor}; font-size:13px;">📍 ${nb.name}</b><br/>
-            <span style="color:#94a3b8; font-size:10px;">${nb.hindiName} • ${nb.category}</span><br/>
-            <span style="font-size:10px; color:#e2e8f0; margin-top:3px; display:block;">${nb.description}</span>
-            <div style="margin-top:4px; font-size:9.5px; color:#38bdf8; font-weight:bold;">Dominant: ${nb.dominantSource}</div>
+          `<div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:11px; padding:6px; background:#ffffff; color:#0f172a; border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.15); border:1px solid #e2e8f0; min-width:140px;">
+            <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:12px;">
+              <span style="width:9px; height:9px; border-radius:9999px; background:${aqiColor}; display:inline-block;"></span>
+              <span>${nb.name}</span>
+            </div>
+            <div style="font-size:10px; color:#64748b; margin-top:2px;">${nb.hindiName} • ${nb.category}</div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:4px; font-size:10.5px; border-top:1px solid #f1f5f9; padding-top:4px;">
+              <span>Air Quality:</span>
+              <b style="color:${aqiColor}; font-size:11.5px;">${nb.aqiBaseline} (${aqiCategoryLabel})</b>
+            </div>
+            <div style="margin-top:3px; font-size:9.5px; color:#64748b;">${nb.dominantSource}</div>
           </div>`,
           { sticky: true }
         );
@@ -1032,9 +1056,13 @@ export const GoogleMapsDashboard: React.FC<GoogleMapsDashboardProps> = ({
               </label>
 
               <label className="flex items-center justify-between p-1.5 rounded-xl hover:bg-slate-100/60 dark:hover:bg-emerald-950/40 cursor-pointer">
-                <span className="flex items-center gap-2 text-slate-800 dark:text-slate-200 font-semibold">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm" />
-                  CPCB AQI Heatmap Grid
+                <span className="flex items-center gap-2 text-slate-800 dark:text-slate-200 font-semibold text-xs">
+                  <span className="flex items-center gap-0.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-sm" />
+                    <span className="w-2 h-2 rounded-full bg-amber-500 shadow-sm" />
+                    <span className="w-2 h-2 rounded-full bg-red-500 shadow-sm" />
+                  </span>
+                  Air Quality Sensor Dots (🟢 🟡 🔴)
                 </span>
                 <input
                   type="checkbox"
@@ -1104,6 +1132,22 @@ export const GoogleMapsDashboard: React.FC<GoogleMapsDashboardProps> = ({
             </div>
           </div>
         )}
+      </div>
+
+      {/* 8.5 FLOATING AIR QUALITY DOTS GUIDE (FOR CITIZENS) */}
+      <div className="absolute bottom-20 left-6 z-20 hidden md:flex items-center gap-2 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-lg border border-slate-200/80 dark:border-slate-800 text-[11px] font-medium text-slate-700 dark:text-slate-300 pointer-events-auto">
+        <span className="text-[10px] uppercase font-bold text-slate-400 font-sans tracking-wider mr-1">Air Dots:</span>
+        <span className="flex items-center gap-1 font-bold text-emerald-600 dark:text-emerald-400">
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm" /> Good (0-100)
+        </span>
+        <span className="text-slate-300 dark:text-slate-700">•</span>
+        <span className="flex items-center gap-1 font-bold text-amber-500">
+          <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm" /> Moderate (101-200)
+        </span>
+        <span className="text-slate-300 dark:text-slate-700">•</span>
+        <span className="flex items-center gap-1 font-bold text-red-500">
+          <span className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm" /> Poor (200+)
+        </span>
       </div>
 
       {/* 9. LIVE COORDINATES & DYNAMIC SCALE + CPCB LEGEND (BOTTOM-RIGHT) */}
