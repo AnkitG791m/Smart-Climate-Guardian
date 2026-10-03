@@ -179,7 +179,7 @@ export const GoogleMapsDashboard: React.FC<GoogleMapsDashboardProps> = ({
     if (!mapInstanceRef.current) {
       const map = L.map(mapContainerRef.current, {
         center: [currentCity.lat, currentCity.lon],
-        zoom: 12,
+        zoom: 11,
         zoomControl: false,
         attributionControl: false,
       });
@@ -276,7 +276,7 @@ export const GoogleMapsDashboard: React.FC<GoogleMapsDashboardProps> = ({
   useEffect(() => {
     const map = mapInstanceRef.current;
     if (!map) return;
-    const targetZoom = (currentCity.id && Number(currentCity.id) >= 9000) ? 15 : 13;
+    const targetZoom = (currentCity.id && Number(currentCity.id) >= 9000) ? 14 : 11;
     map.flyTo([currentCity.lat, currentCity.lon], targetZoom, {
       duration: 1.4,
     });

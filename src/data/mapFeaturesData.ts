@@ -368,36 +368,81 @@ export const CITIZEN_REPORTS_GEO: CitizenIncidentPin[] = [
 ];
 
 // 5x5 Grid around Bhopal (Lat: 23.2599, Lon: 77.4126) for simulated spatial heatmap
+// Comprehensive 20km - 30km Regional Grid covering Bhopal Metropolitan Area & Surrounding Belt
 export const BHOPAL_GRID_CELLS = [
-  { lat: 23.20, lng: 77.35, aqi: 112, category: 'Moderate', temp: 31.2, floodRisk: 34 },
-  { lat: 23.20, lng: 77.38, aqi: 145, category: 'Moderate', temp: 32.0, floodRisk: 42 },
-  { lat: 23.20, lng: 77.41, aqi: 168, category: 'Moderate', temp: 33.1, floodRisk: 30 },
-  { lat: 23.20, lng: 77.44, aqi: 195, category: 'Moderate', temp: 34.0, floodRisk: 28 },
-  { lat: 23.20, lng: 77.47, aqi: 180, category: 'Moderate', temp: 32.8, floodRisk: 25 },
+  // --- South Region (20 - 30 km: Mandideep, Obaidullaganj, Kerwa & Kolar Dam buffer) ---
+  { lat: 23.05, lng: 77.24, aqi: 62,  category: 'Good',         temp: 29.5, floodRisk: 25 },
+  { lat: 23.05, lng: 77.32, aqi: 68,  category: 'Good',         temp: 29.8, floodRisk: 30 },
+  { lat: 23.05, lng: 77.40, aqi: 110, category: 'Moderate',     temp: 31.0, floodRisk: 28 },
+  { lat: 23.05, lng: 77.48, aqi: 195, category: 'Moderate',     temp: 33.2, floodRisk: 32 },
+  { lat: 23.05, lng: 77.54, aqi: 240, category: 'Poor',         temp: 34.5, floodRisk: 30 },
+  { lat: 23.05, lng: 77.62, aqi: 145, category: 'Moderate',     temp: 32.0, floodRisk: 22 },
 
-  { lat: 23.23, lng: 77.35, aqi: 95,  category: 'Satisfactory', temp: 30.8, floodRisk: 55 },
-  { lat: 23.23, lng: 77.38, aqi: 130, category: 'Moderate', temp: 31.5, floodRisk: 72 },
-  { lat: 23.23, lng: 77.41, aqi: 175, category: 'Moderate', temp: 33.8, floodRisk: 65 },
-  { lat: 23.23, lng: 77.44, aqi: 245, category: 'Poor',     temp: 35.2, floodRisk: 40 },
-  { lat: 23.23, lng: 77.47, aqi: 210, category: 'Poor',     temp: 34.0, floodRisk: 35 },
+  { lat: 23.10, lng: 77.20, aqi: 72,  category: 'Satisfactory', temp: 30.0, floodRisk: 28 },
+  { lat: 23.10, lng: 77.28, aqi: 65,  category: 'Good',         temp: 29.6, floodRisk: 35 },
+  { lat: 23.10, lng: 77.36, aqi: 78,  category: 'Satisfactory', temp: 30.2, floodRisk: 42 },
+  { lat: 23.10, lng: 77.44, aqi: 155, category: 'Moderate',     temp: 32.5, floodRisk: 30 },
+  { lat: 23.10, lng: 77.52, aqi: 255, category: 'Poor',         temp: 34.8, floodRisk: 35 },
+  { lat: 23.10, lng: 77.60, aqi: 175, category: 'Moderate',     temp: 33.0, floodRisk: 26 },
 
-  { lat: 23.26, lng: 77.35, aqi: 88,  category: 'Satisfactory', temp: 30.5, floodRisk: 45 },
-  { lat: 23.26, lng: 77.38, aqi: 155, category: 'Moderate', temp: 32.2, floodRisk: 68 },
-  { lat: 23.26, lng: 77.41, aqi: 185, category: 'Moderate', temp: 33.4, floodRisk: 58 },
-  { lat: 23.26, lng: 77.44, aqi: 312, category: 'Very Poor', temp: 35.8, floodRisk: 42 },
-  { lat: 23.26, lng: 77.47, aqi: 260, category: 'Poor',     temp: 34.5, floodRisk: 38 },
+  // --- South-Central & Suburbs (10 - 20 km: Misrod, Ratibad, Kolar Road, Shahpura) ---
+  { lat: 23.15, lng: 77.22, aqi: 82,  category: 'Satisfactory', temp: 30.4, floodRisk: 32 },
+  { lat: 23.15, lng: 77.30, aqi: 75,  category: 'Satisfactory', temp: 30.1, floodRisk: 40 },
+  { lat: 23.15, lng: 77.38, aqi: 98,  category: 'Satisfactory', temp: 31.0, floodRisk: 48 },
+  { lat: 23.15, lng: 77.44, aqi: 165, category: 'Moderate',     temp: 32.8, floodRisk: 36 },
+  { lat: 23.15, lng: 77.50, aqi: 190, category: 'Moderate',     temp: 33.5, floodRisk: 34 },
+  { lat: 23.15, lng: 77.58, aqi: 185, category: 'Moderate',     temp: 33.1, floodRisk: 28 },
 
-  { lat: 23.29, lng: 77.35, aqi: 105, category: 'Moderate', temp: 30.2, floodRisk: 38 },
-  { lat: 23.29, lng: 77.38, aqi: 140, category: 'Moderate', temp: 31.8, floodRisk: 50 },
-  { lat: 23.29, lng: 77.41, aqi: 190, category: 'Moderate', temp: 33.0, floodRisk: 48 },
-  { lat: 23.29, lng: 77.44, aqi: 230, category: 'Poor',     temp: 34.1, floodRisk: 36 },
-  { lat: 23.29, lng: 77.47, aqi: 220, category: 'Poor',     temp: 33.5, floodRisk: 32 },
+  { lat: 23.20, lng: 77.22, aqi: 95,  category: 'Satisfactory', temp: 30.8, floodRisk: 35 },
+  { lat: 23.20, lng: 77.28, aqi: 88,  category: 'Satisfactory', temp: 30.5, floodRisk: 45 },
+  { lat: 23.20, lng: 77.35, aqi: 112, category: 'Moderate',     temp: 31.2, floodRisk: 34 },
+  { lat: 23.20, lng: 77.41, aqi: 168, category: 'Moderate',     temp: 33.1, floodRisk: 30 },
+  { lat: 23.20, lng: 77.47, aqi: 180, category: 'Moderate',     temp: 32.8, floodRisk: 25 },
+  { lat: 23.20, lng: 77.56, aqi: 215, category: 'Poor',         temp: 34.2, floodRisk: 28 },
 
-  { lat: 23.32, lng: 77.35, aqi: 120, category: 'Moderate', temp: 30.0, floodRisk: 30 },
-  { lat: 23.32, lng: 77.38, aqi: 165, category: 'Moderate', temp: 31.2, floodRisk: 40 },
-  { lat: 23.32, lng: 77.41, aqi: 215, category: 'Poor',     temp: 32.8, floodRisk: 45 },
-  { lat: 23.32, lng: 77.44, aqi: 280, category: 'Poor',     temp: 33.9, floodRisk: 35 },
-  { lat: 23.32, lng: 77.47, aqi: 345, category: 'Very Poor', temp: 34.8, floodRisk: 30 },
+  // --- Central Urban Core (0 - 10 km: MP Nagar, TT Nagar, Upper Lake, Govindpura) ---
+  { lat: 23.24, lng: 77.20, aqi: 118, category: 'Moderate',     temp: 31.2, floodRisk: 30 },
+  { lat: 23.24, lng: 77.28, aqi: 92,  category: 'Satisfactory', temp: 30.6, floodRisk: 48 },
+  { lat: 23.24, lng: 77.35, aqi: 86,  category: 'Satisfactory', temp: 30.2, floodRisk: 55 },
+  { lat: 23.24, lng: 77.41, aqi: 178, category: 'Moderate',     temp: 33.8, floodRisk: 65 },
+  { lat: 23.24, lng: 77.46, aqi: 245, category: 'Poor',         temp: 35.2, floodRisk: 40 },
+  { lat: 23.24, lng: 77.55, aqi: 230, category: 'Poor',         temp: 34.6, floodRisk: 32 },
+
+  { lat: 23.27, lng: 77.22, aqi: 115, category: 'Moderate',     temp: 31.0, floodRisk: 30 },
+  { lat: 23.27, lng: 77.30, aqi: 98,  category: 'Satisfactory', temp: 30.5, floodRisk: 44 },
+  { lat: 23.27, lng: 77.37, aqi: 94,  category: 'Satisfactory', temp: 30.4, floodRisk: 60 },
+  { lat: 23.27, lng: 77.43, aqi: 188, category: 'Moderate',     temp: 33.6, floodRisk: 52 },
+  { lat: 23.27, lng: 77.49, aqi: 265, category: 'Poor',         temp: 35.0, floodRisk: 38 },
+  { lat: 23.27, lng: 77.58, aqi: 225, category: 'Poor',         temp: 34.2, floodRisk: 28 },
+
+  // --- North-Central (10 - 20 km: Airport, Karond, Bhanpur, Sukhi Sewaniya) ---
+  { lat: 23.32, lng: 77.22, aqi: 105, category: 'Moderate',     temp: 30.8, floodRisk: 28 },
+  { lat: 23.32, lng: 77.30, aqi: 120, category: 'Moderate',     temp: 31.1, floodRisk: 35 },
+  { lat: 23.32, lng: 77.38, aqi: 145, category: 'Moderate',     temp: 32.0, floodRisk: 42 },
+  { lat: 23.32, lng: 77.44, aqi: 275, category: 'Poor',         temp: 35.4, floodRisk: 35 },
+  { lat: 23.32, lng: 77.52, aqi: 180, category: 'Moderate',     temp: 33.2, floodRisk: 30 },
+  { lat: 23.32, lng: 77.62, aqi: 125, category: 'Moderate',     temp: 31.8, floodRisk: 24 },
+
+  { lat: 23.37, lng: 77.24, aqi: 96,  category: 'Satisfactory', temp: 30.2, floodRisk: 26 },
+  { lat: 23.37, lng: 77.32, aqi: 110, category: 'Moderate',     temp: 30.8, floodRisk: 30 },
+  { lat: 23.37, lng: 77.40, aqi: 165, category: 'Moderate',     temp: 32.4, floodRisk: 34 },
+  { lat: 23.37, lng: 77.48, aqi: 195, category: 'Moderate',     temp: 33.5, floodRisk: 30 },
+  { lat: 23.37, lng: 77.56, aqi: 155, category: 'Moderate',     temp: 32.2, floodRisk: 25 },
+  { lat: 23.37, lng: 77.64, aqi: 85,  category: 'Satisfactory', temp: 29.8, floodRisk: 20 },
+
+  // --- North Region (20 - 30 km: Berasia, Gunga, Northern Stubble & Farmland Plains) ---
+  { lat: 23.44, lng: 77.24, aqi: 88,  category: 'Satisfactory', temp: 29.6, floodRisk: 22 },
+  { lat: 23.44, lng: 77.32, aqi: 102, category: 'Moderate',     temp: 30.4, floodRisk: 25 },
+  { lat: 23.44, lng: 77.40, aqi: 185, category: 'Moderate',     temp: 32.8, floodRisk: 28 },
+  { lat: 23.44, lng: 77.48, aqi: 205, category: 'Poor',         temp: 33.8, floodRisk: 26 },
+  { lat: 23.44, lng: 77.56, aqi: 140, category: 'Moderate',     temp: 31.6, floodRisk: 22 },
+  { lat: 23.44, lng: 77.64, aqi: 78,  category: 'Satisfactory', temp: 29.4, floodRisk: 20 },
+
+  { lat: 23.48, lng: 77.30, aqi: 92,  category: 'Satisfactory', temp: 29.8, floodRisk: 20 },
+  { lat: 23.48, lng: 77.38, aqi: 155, category: 'Moderate',     temp: 31.5, floodRisk: 24 },
+  { lat: 23.48, lng: 77.44, aqi: 198, category: 'Moderate',     temp: 33.0, floodRisk: 25 },
+  { lat: 23.48, lng: 77.52, aqi: 165, category: 'Moderate',     temp: 32.1, floodRisk: 22 },
+  { lat: 23.48, lng: 77.60, aqi: 82,  category: 'Satisfactory', temp: 29.5, floodRisk: 18 },
 ];
 
 export interface BhopalNeighborhood {
@@ -413,6 +458,7 @@ export interface BhopalNeighborhood {
 }
 
 export const BHOPAL_NEIGHBORHOODS: BhopalNeighborhood[] = [
+  // --- Central Urban Core ---
   {
     id: 'mp-nagar',
     name: 'MP Nagar (Zone I & II)',
@@ -454,8 +500,8 @@ export const BHOPAL_NEIGHBORHOODS: BhopalNeighborhood[] = [
     lat: 23.1850,
     lng: 77.4210,
     description: 'Rapidly growing residential corridor along Kolar river basin.',
-    aqiBaseline: 195,
-    dominantSource: 'Road widening construction dust & stubble drifts'
+    aqiBaseline: 165,
+    dominantSource: 'Road widening construction dust & suburban traffic'
   },
   {
     id: 'shahpura',
@@ -544,6 +590,124 @@ export const BHOPAL_NEIGHBORHOODS: BhopalNeighborhood[] = [
     description: 'Historic walled city markets, dense heritage alleys, and bazaar trade.',
     aqiBaseline: 178,
     dominantSource: 'Dense narrow-lane scooter exhaust & bazaar stalls'
+  },
+
+  // --- South & South-East (15 - 25 km: Mandideep, Misrod, Kerwa/Kolar Dam) ---
+  {
+    id: 'mandideep-industrial',
+    name: 'Mandideep Industrial Growth Center',
+    hindiName: 'मंडीदीप औद्योगिक क्षेत्र',
+    category: 'Industrial Zone',
+    lat: 23.0880,
+    lng: 77.5180,
+    description: 'Major national manufacturing hub with pharmaceutical, electro-chemical, and engineering factories (22 km South).',
+    aqiBaseline: 248,
+    dominantSource: 'Heavy manufacturing emissions & chemical processing'
+  },
+  {
+    id: 'misrod-corridor',
+    name: 'Misrod & Ratanpur Highway Belt',
+    hindiName: 'मिसरोद एवं रतनपुर',
+    category: 'Commercial Hub',
+    lat: 23.1550,
+    lng: 77.4780,
+    description: 'Fast-expanding southern logistics and educational belt on NH-46 (16 km South-East).',
+    aqiBaseline: 182,
+    dominantSource: 'High-density highway freight traffic & infrastructure expansion'
+  },
+  {
+    id: 'kerwa-dam',
+    name: 'Kerwa & Kolar Dam Catchment Reserve',
+    hindiName: 'केरवा एवं कोलार डैम अभयारण्य',
+    category: 'Ecological Lake',
+    lat: 23.1180,
+    lng: 77.3750,
+    description: 'Pristine forested reservoir basin and eco-tourism catchment zone (20 km South-West).',
+    aqiBaseline: 62,
+    dominantSource: 'Dense teak forest canopy & zero industrial contamination'
+  },
+
+  // --- West & South-West (15 - 28 km: Ratibad, Phanda, Barkhera) ---
+  {
+    id: 'ratibad-educational',
+    name: 'Ratibad & Neelbad Eco Campus Belt',
+    hindiName: 'रातीबड़ एवं नीलबड़',
+    category: 'Residential Colony',
+    lat: 23.1680,
+    lng: 77.3180,
+    description: 'Sprawling green university campuses and low-density organic farming belt (16 km South-West).',
+    aqiBaseline: 76,
+    dominantSource: 'Green canopy filtering, light educational vehicle flow'
+  },
+  {
+    id: 'phanda-sehore',
+    name: 'Phanda Toll & Sehore Highway Junction',
+    hindiName: 'फंदा टोल / सीहोर हाईवे जंक्शन',
+    category: 'Transit Hub',
+    lat: 23.2120,
+    lng: 77.2050,
+    description: 'Western industrial logistics gateway connecting Bhopal to Indore corridor (24 km West).',
+    aqiBaseline: 135,
+    dominantSource: 'Intercity commercial buses & freight highway emission'
+  },
+  {
+    id: 'barkhera-salaam',
+    name: 'Barkhera Salaam & Western Farmlands',
+    hindiName: 'बरखेड़ा सलाम ग्रामीण अंचल',
+    category: 'Residential Colony',
+    lat: 23.2850,
+    lng: 77.1950,
+    description: 'Western rural outskirts with undulating scrub groves and fresh westerly air (22 km West).',
+    aqiBaseline: 88,
+    dominantSource: 'Seasonal agricultural tillage dust'
+  },
+
+  // --- North & North-East (15 - 30 km: Bhanpur, Sukhi Sewaniya, Berasia) ---
+  {
+    id: 'bhanpur-landfill',
+    name: 'Bhanpur & Karond Waste Facility Buffer',
+    hindiName: 'भानपुर खंती एवं करोंद मंडी',
+    category: 'Industrial Zone',
+    lat: 23.3150,
+    lng: 77.4300,
+    description: 'Regional municipal remediation landfill and major wholesale grain logistics hub (14 km North).',
+    aqiBaseline: 268,
+    dominantSource: 'Methane decomposition flares & heavy diesel tractor queues'
+  },
+  {
+    id: 'sukhi-sewaniya',
+    name: 'Sukhi Sewaniya Agro-Logistics Center',
+    hindiName: 'सूखी सेवनिया रेलवे जंक्शन',
+    category: 'Transit Hub',
+    lat: 23.3550,
+    lng: 77.5100,
+    description: 'Freight railway transshipment depot and food grain storage facilities (18 km North-East).',
+    aqiBaseline: 172,
+    dominantSource: 'Diesel locomotive shunting & grain warehouse dust'
+  },
+  {
+    id: 'berasia-agricultural',
+    name: 'Berasia Agricultural Stubble & Scrub Plains',
+    hindiName: 'बैरसिया कृषि एवं पराली क्षेत्र',
+    category: 'Residential Colony',
+    lat: 23.4750,
+    lng: 77.4200,
+    description: 'Broad northern agricultural heartland known for extensive wheat cultivation (28 km North).',
+    aqiBaseline: 198,
+    dominantSource: 'Biomass crop residue burning & unpaved farm access roads'
+  },
+
+  // --- East (15 - 25 km: Bilkhiriya, Salamatpur) ---
+  {
+    id: 'bilkhiriya-industrial',
+    name: 'Bilkhiriya & Raisen Highway Industrial Corridor',
+    hindiName: 'बिलखिरिया / रायसेन रोड औद्योगिक बेल्ट',
+    category: 'Industrial Zone',
+    lat: 23.2850,
+    lng: 77.5950,
+    description: 'Heavy engineering, packaging units, and brick kiln clusters along NH-146 (22 km East).',
+    aqiBaseline: 228,
+    dominantSource: 'Brick kiln chimneys & asphalt road heating emissions'
   }
 ];
 
