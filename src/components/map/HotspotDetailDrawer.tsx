@@ -235,14 +235,32 @@ export const HotspotDetailDrawer: React.FC<HotspotDetailDrawerProps> = ({
                   <span className="text-2xl font-black text-amber-600 dark:text-amber-400">
                     {feature.data.confidencePercent}%
                   </span>
-                  <span className="text-[10px] text-slate-400 block font-sans">Satellite Verified</span>
+                  <span className="text-[10px] text-slate-500 block font-sans">
+                    {feature.data.confidenceLevel ? `${feature.data.confidenceLevel.toUpperCase()} Quality` : 'Satellite Verified'}
+                  </span>
                 </div>
                 <div className="p-3 rounded-2xl bg-slate-50 dark:bg-black/30 border border-slate-200 dark:border-slate-800">
-                  <span className="text-[10px] font-bold uppercase text-slate-400 font-sans block">Thermal Brightness</span>
+                  <span className="text-[10px] font-bold uppercase text-slate-500 font-sans block">Thermal Brightness</span>
                   <span className="text-2xl font-black text-slate-900 dark:text-white">
                     {feature.data.brightnessTempK} K
                   </span>
-                  <span className="text-[10px] text-slate-400 block font-sans">~{feature.data.estimatedAreaHectares} Ha</span>
+                  <span className="text-[10px] text-slate-500 block font-sans">~{feature.data.estimatedAreaHectares} Ha Area</span>
+                </div>
+              </div>
+
+              {/* Fire Radiative Power (FRP) & Pass Telemetry */}
+              <div className="grid grid-cols-2 gap-2 text-center font-mono">
+                <div className="p-2.5 rounded-xl bg-orange-500/10 border border-orange-500/20">
+                  <span className="text-[9px] font-bold uppercase text-orange-600 font-sans block">Radiative Power (FRP)</span>
+                  <span className="text-lg font-black text-orange-600 dark:text-orange-400">
+                    {feature.data.frpMw ? `${feature.data.frpMw} MW` : 'Active'}
+                  </span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-black/30 border border-slate-200 dark:border-slate-800">
+                  <span className="text-[9px] font-bold uppercase text-slate-500 font-sans block">Orbit Pass</span>
+                  <span className="text-lg font-bold text-slate-800 dark:text-slate-200 font-sans flex items-center justify-center gap-1">
+                    {feature.data.daynight === 'N' ? '🌙 Night' : '☀️ Day'}
+                  </span>
                 </div>
               </div>
 
@@ -256,21 +274,21 @@ export const HotspotDetailDrawer: React.FC<HotspotDetailDrawerProps> = ({
                 <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
                   <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-red-600/90 text-white backdrop-blur-md border border-white/20 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-                    Live Ground Truth
+                    NASA FIRMS VIIRS
                   </span>
                   <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-black/70 text-slate-200 backdrop-blur-md">
-                    Bhopal Municipal District
+                    {feature.data.satellite || 'Suomi-NPP'}
                   </span>
                 </div>
                 <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/95 via-black/70 to-transparent text-white">
                   <div className="flex items-center justify-between text-[10px]">
                     <span className="font-bold flex items-center gap-1 text-amber-400">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Photographic Evidence Verified
+                      <CheckCircle2 className="w-3.5 h-3.5" /> Thermal Satellite Tracked
                     </span>
                     <span className="font-mono text-[9px] text-slate-300">Lat: {feature.data.lat.toFixed(4)}°N</span>
                   </div>
                   <p className="text-[11px] text-slate-200 mt-1 font-medium leading-snug">
-                    Community responder actively suppressing flare with water bucket before fire engine arrival.
+                    Real-time thermal anomaly detected by NASA satellite sensors with ground-level aerosol dispersion.
                   </p>
                 </div>
               </div>
@@ -284,10 +302,16 @@ export const HotspotDetailDrawer: React.FC<HotspotDetailDrawerProps> = ({
                   <span>Acquisition Time:</span>
                   <span className="font-bold text-slate-800 dark:text-slate-200">{feature.data.acqDate}, {feature.data.acqTime}</span>
                 </div>
+                <div className="flex justify-between text-slate-500">
+                  <span>Instrument / Sensor:</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-200">
+                    {feature.data.instrument || 'VIIRS'} ({feature.data.satellite || 'Suomi-NPP'})
+                  </span>
+                </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/30 text-rose-800 dark:text-rose-300 text-[11px] leading-relaxed">
-                Active stubble / scrub incineration releases fine PM2.5 and carbon monoxide. Downwind plume trajectory poses acute respiratory risks to nearby colonies.
+              <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/30 text-amber-900 dark:text-amber-300 text-[11px] leading-relaxed">
+                Active stubble / scrub thermal anomaly releases concentrated PM2.5 and CO smoke plumes. Residents in downwind corridors should keep windows shut and wear N95 filtration.
               </div>
             </>
           )}

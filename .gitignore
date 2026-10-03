@@ -39,3 +39,4 @@ pnpm-debug.log*
 # Antigravity & Internal cache
 .gemini/
 scratch/
+.vercel

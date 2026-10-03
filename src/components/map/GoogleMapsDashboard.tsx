@@ -61,6 +61,7 @@ import { KeyboardShortcutsModal } from '../modals/KeyboardShortcutsModal';
 import { FloatingChatButton } from '../chat/FloatingChatButton';
 import { GeminiClimateChatModal } from '../chat/GeminiClimateChatModal';
 import { soundService } from '../../services/soundService';
+import { firmsSatelliteService } from '../../services/firmsService';
 
 interface GoogleMapsDashboardProps {
   currentCity: CityLocation;
@@ -133,6 +134,43 @@ export const GoogleMapsDashboard: React.FC<GoogleMapsDashboardProps> = ({
     lat: currentCity.lat,
     lng: currentCity.lon,
   });
+
+  // NASA FIRMS Live Fire Satellite Hotspots
+  const [fireHotspots, setFireHotspots] = useState<FireHotspotFeature[]>(FIRE_HOTSPOTS);
+  const [firmsStatus, setFirmsStatus] = useState<{ isLive: boolean; source: string; count: number }>({
+    isLive: false,
+    source: 'NASA FIRMS VIIRS',
+    count: FIRE_HOTSPOTS.length,
+  });
+
+  // Real-time NASA FIRMS Satellite Telemetry Fetch (VIIRS / MODIS)
+  useEffect(() => {
+    let isMounted = true;
+    const fetchFirmsHotspots = async () => {
+      try {
+        const res = await firmsSatelliteService.getActiveFireHotspots({
+          centerLat: currentCity.lat,
+          centerLng: currentCity.lon,
+          days: 5,
+        });
+        if (isMounted) {
+          setFireHotspots(res.hotspots);
+          setFirmsStatus({
+            isLive: res.isLive,
+            source: res.source,
+            count: res.hotspots.length,
+          });
+        }
+      } catch (err) {
+        console.warn('[FIRMS] Hotspots fetch error:', err);
+      }
+    };
+
+    fetchFirmsHotspots();
+    return () => {
+      isMounted = false;
+    };
+  }, [currentCity.lat, currentCity.lon]);
 
   // Initialize Map
   useEffect(() => {
@@ -505,9 +543,9 @@ export const GoogleMapsDashboard: React.FC<GoogleMapsDashboardProps> = ({
       });
     }
 
-    // 3. FIRE HOTSPOTS
+    // 3. FIRE HOTSPOTS (NASA FIRMS Live Satellite Telemetry)
     if (showFireHotspots) {
-      FIRE_HOTSPOTS.forEach((fire) => {
+      fireHotspots.forEach((fire) => {
         const fireIcon = L.divIcon({
           className: 'fire-pin',
           html: `
@@ -530,7 +568,7 @@ export const GoogleMapsDashboard: React.FC<GoogleMapsDashboardProps> = ({
         marker.bindTooltip(
           `<div style="font-family:'Plus Jakarta Sans'; font-size:11px;">
             <b style="color:#f97316;">🔥 ${fire.name}</b><br/>
-            <span>Confidence: ${fire.confidencePercent}% • ${fire.source}</span>
+            <span>Confidence: ${fire.confidencePercent}% • ${fire.frpMw ? fire.frpMw + ' MW • ' : ''}${fire.source}</span>
           </div>`,
           { sticky: true }
         );
@@ -670,6 +708,7 @@ export const GoogleMapsDashboard: React.FC<GoogleMapsDashboardProps> = ({
     showCitizenReports,
     showShelters,
     showNeighborhoods,
+    fireHotspots,
   ]);
 
   const toggleLanguage = () => {
@@ -1006,9 +1045,15 @@ export const GoogleMapsDashboard: React.FC<GoogleMapsDashboardProps> = ({
               </label>
 
               <label className="flex items-center justify-between p-1.5 rounded-xl hover:bg-slate-100/60 dark:hover:bg-emerald-950/40 cursor-pointer">
-                <span className="flex items-center gap-2 text-slate-800 dark:text-slate-200 font-semibold">
+                <span className="flex items-center gap-2 text-slate-800 dark:text-slate-200 font-semibold text-xs">
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm" />
-                  NASA FIRMS Fire Hotspots
+                  <span>NASA FIRMS Fire Hotspots</span>
+                  {firmsStatus.isLive && (
+                    <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                      LIVE ({firmsStatus.count})
+                    </span>
+                  )}
                 </span>
                 <input
                   type="checkbox"

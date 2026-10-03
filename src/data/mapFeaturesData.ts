@@ -20,11 +20,16 @@ export interface FireHotspotFeature {
   lng: number;
   brightnessTempK: number;
   confidencePercent: number;
-  source: 'NASA FIRMS / VIIRS' | 'CPCB Ground Sensor' | 'Citizen Satellite Corroboration';
+  source: string;
   acqDate: string;
   acqTime: string;
   estimatedAreaHectares: number;
   riskScore: number;
+  frpMw?: number;
+  daynight?: 'D' | 'N';
+  satellite?: string;
+  instrument?: string;
+  confidenceLevel?: string;
 }
 
 export interface FloodInundationFeature {
